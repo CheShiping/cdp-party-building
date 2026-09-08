@@ -1,0 +1,29 @@
+# ============================================================
+# 仓库根 .gitignore
+# 子工程 cdp-party-building-uniapp/.gitignore 已覆盖 node_modules/、dist/、
+# unpackage/、*.log、.env、编辑器目录；此处只处理仓库根层面的内容。
+# ============================================================
+
+# ---------- 1. IDE / 技能资产（不入库） ----------
+# CodeBuddy 技能目录：15 个 uniapp 技能 + base 子技能，体积大且由 IDE 管理
+.codebuddy/
+# 历史技能目录（已废弃，保留规则防止误提交）
+.workbuddy/
+
+# ---------- 2. harness 工程相关文件（不入库） ----------
+# 编码 agent 的调度资产：仅服务本地会话，不需要进版本库。
+# 若后续需要随仓库分发，用 git add -f <file> 强制加入。
+AGENTS.md
+feature_list.json
+progress.md
+session-handoff.md
+init.sh
+init.ps1
+
+# ---------- 3. 日志与临时产物 ----------
+# 微信开发者工具 / 构建过程在根目录、docx/、src/ 各处生成 debug.log
+*.log
+
+# ---------- 4. 系统文件 ----------
+.DS_Store
+Thumbs.db

@@ -1,0 +1,30 @@
+{
+  "_comment": "由 sync-theme.js 生成，check-colors.js 用作白名单，禁止手动修改。",
+  "generatedFrom": "theme.json",
+  "allowed": [
+    "#2196f3",
+    "#444952",
+    "#4caf50",
+    "#4e535d",
+    "#585d69",
+    "#616874",
+    "#6b7280",
+    "#7f1a1a",
+    "#911d1d",
+    "#a22121",
+    "#b42424",
+    "#bbbec5",
+    "#c62828",
+    "#c8cbd0",
+    "#d6d8db",
+    "#e3e4e7",
+    "#e59c9c",
+    "#eaafaf",
+    "#eaebed",
+    "#efc3c3",
+    "#f44336",
+    "#f4d6d6",
+    "#f7e0e0",
+    "#ff9800"
+  ]
+}

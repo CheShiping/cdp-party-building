@@ -1,0 +1,83 @@
+{
+  "name": "cdp-party-building",
+  "appid": "__UNI__93A6AF0",
+  "description": "CDP 智慧党建 uni-app 小程序端",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "app-plus": {
+    "usingComponents": true,
+    "nvueStyleCompiler": "uni-app",
+    "compilerVersion": 3,
+    "splashscreen": {
+      "alwaysShowBeforeRender": true,
+      "waiting": true,
+      "autoclose": true,
+      "delay": 0
+    },
+    "modules": {},
+    "distribute": {
+      "android": {
+        "permissions": [
+          "<uses-permission android:name=\"android.permission.INTERNET\" />",
+          "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+          "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />"
+        ]
+      },
+      "ios": {},
+      "sdkConfigs": {
+        "payment": {},
+        "share": {},
+        "push": {}
+      }
+    },
+    "screenOrientation": ["portrait-primary"]
+  },
+  "h5": {
+    "title": "CDP 智慧党建",
+    "router": {
+      "mode": "hash",
+      "base": "./"
+    },
+    "optimization": {
+      "treeShaking": {
+        "enable": true
+      }
+    },
+    "publicPath": "./",
+    "template": "index.html"
+  },
+  "mp-weixin": {
+    "appid": "wxYOUR_APPID_PLACEHOLDER",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "enhance": true,
+      "postcss": true,
+      "preloadBackgroundData": false,
+      "minified": true,
+      "newFeature": false,
+      "coverView": true,
+      "nodeModules": false,
+      "autoAudits": false,
+      "showShadowRootInWkwebview": true,
+      "uglifyFileName": false
+    },
+    "usingComponents": true,
+    "permission": {},
+    "requiredPrivateInfos": []
+  },
+  "mp-alipay": {
+    "usingComponents": true
+  },
+  "mp-baidu": {
+    "usingComponents": true
+  },
+  "mp-toutiao": {
+    "usingComponents": true
+  },
+  "uniStatistics": {
+    "enable": false
+  },
+  "vueVersion": "3"
+}
