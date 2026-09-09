@@ -1,3 +1,5 @@
+// 全局样式入口（App.vue 引入）：页面级通用容器 + 安全区 + 基础工具
+// Token 与全局类统一由 variables.scss 注入（vite additionalData 亦注入同一出口）
 @import "variables";
 
 /* 页面级通用容器 */
@@ -13,28 +15,6 @@
 
 .safe-area-bottom {
   @include safe-area-bottom;
-}
-
-/* 通用文本 */
-.text-primary {
-  color: $color-text-primary;
-}
-
-.text-secondary {
-  color: $color-text-secondary;
-}
-
-.text-tertiary {
-  color: $color-text-tertiary;
-}
-
-/* 通用 flex */
-.flex {
-  display: flex;
-}
-
-.flex-center {
-  @include flex-center;
 }
 
 /* 文本省略 */

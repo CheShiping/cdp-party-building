@@ -4,9 +4,9 @@
 |---|---|
 | 功能编号 | feat-002 |
 | 功能名称 | 设计规范与主题系统落地（设计令牌 / 党建红主题色 / 全局样式 / 组件样式基座） |
-| 文档版本 | v1.0（设计态，未实施） |
+| 文档版本 | v1.1（已实施） |
 | 编写日期 | 2026-09-09 |
-| 文档状态 | **待评审 → 评审通过后按第 11 章分步实施** |
+| 文档状态 | **已实施并全量验证通过（见第 15 章）** |
 | 依赖 | feat-001（uni-app 工程脚手架，已 done） |
 | 被依赖 | feat-005 登录、feat-006 框架导航、feat-007 首页、feat-010 留言、feat-012 档案、feat-013 收藏 |
 | 权威输入 | `prototype/`（6 张原型图，取色唯一来源）、`uniapp-style-skill`（D01–D34）、`uniapp-theme-skill`（色阶/尺寸/圆角/硬编码治理） |
@@ -1089,3 +1089,35 @@ const mix=(a,b,w)=>({r:a.r*w+b.r*(1-w),g:a.g*w+b.g*(1-w),b:a.b*w+b.b*(1-w)});
 | Page Gutter | 页面左右外边距，本项目 24rpx |
 | 受控例外 | 与规范冲突但由原型/平台强制、并在文档与工具中显式登记的偏差 |
 | 文本安全变体 | 为满足 D34 而从原型基色派生出的深色版本（如 `#A86400`） |
+
+---
+
+## 15. 实施记录（2026-09-09，v1.1 追加）
+
+按第 11 章 Step 0–9 执行完毕。与设计文档的差异与补充：
+
+| # | 差异/补充 | 说明 |
+|---|---|---|
+| 1 | Step 0 备份以 git 基线替代 | 会话开始时工作树 clean，`git checkout` 可整体回滚，不再落 `.bak` 污染目录 |
+| 2 | `theme.json` 新增 `colors.goldLight: #cd9c5a` | 设计文档 4.7 的 `$color-gold-light`（实测浅金）不落在 mix 色阶整数级上，按"唯一配置入口"原则入 theme.json，由 sync 输出到 `_theme-config.scss` / `colors.ts` / 白名单 |
+| 3 | 中性阶 `gray-palette()` 废弃 | `_primitive.scss` 直接引用 `$theme-gray-50..900`（显式 10 阶）；`sync-theme.js` 保留 `grayBase` 回退兼容（S1） |
+| 4 | `$comp-button-padding-x-*` / `$comp-user-info-padding-y` 按 6.3 迁移表保旧值 | 16/24/32rpx 一一对应新别名，零视觉变更 |
+| 5 | 五个新基座文件（typography/utilities/layout/page/animations）不反向 `@import variables` | 统一由 `variables.scss` 出口注入（对齐 9.2 引入链路），避免循环引入 |
+| 6 | 组件适配 | `AppInput` 独立 `$comp-input-*`（新增 `placeholder-class` 走 `$comp-input-placeholder-color`）；`AppButton` 按压态 `primary-600`、字重 600（安卓 500 不生效）；`AppNavbar` z-index/尺寸 token 化 + TS `TITLE_ROW_RPX` 同步注释；`AppEmpty`/`AppPopup`/`AppCard`/`AppTab` 换用新语义 token |
+
+### 验证证据（2026-09-09，均在 `cdp-party-building-uniapp/` 执行）
+
+| 命令 | 结果 |
+|---|---|
+| `npm run theme:sync` | 三份产物生成 + 白名单自检 OK（neutral+功能色+textSafe+accent+soft+primary/gold 色阶） |
+| `npm run theme:check` | OK：扫描 64 文件，0 违规 |
+| `npm run type-check` | 0 error |
+| `npm run lint` | 0 error 0 warning |
+| `npm run build:mp-weixin` | DONE Build complete（Sass `@import` 弃用警告为遗留 L3 技术债） |
+
+pages.json 校准落地：tabBar `selectedColor #c82028` / `color #acacac`；`globalStyle.navigationBarBackgroundColor #c82028`、`backgroundColor #f5f5f5`。
+
+### 遗留问题（新增）
+
+- L10：五张原型图之外的新页面（登录页等）无原型稿，按本设计系统 Token 派生（红渐变 + 白卡 + 主色按钮），如后续有设计稿需回校。
+- 其余 L1–L9 不变。

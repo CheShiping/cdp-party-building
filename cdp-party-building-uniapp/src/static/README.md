@@ -92,7 +92,7 @@
    | 图文详情头图 | `apituwen/tuwenxiangqing` 的 `wenjianurl` | 仅加载/失败兜底 |
    | 收藏 / 浏览记录缩略图 | `apituwen/tuwencaozuojilu` 的 `ossdir` + `wenjianurl` | 仅加载/失败兜底 |
    | 首页轮播 / 专题专栏 Banner | 走 `apituwen` 图文类别接口，有数据用接口 | 接口无数据时兜底 |
-   | 用户头像 | `apiuser/userinfo` **未返回头像字段**（仅有上传接口 `apiuser/touxiang`）→ 用 `avatar-*` 作默认头像；用户上传后展示其选择/接口返回图 | 允许（接口未返回） |
+   | 用户头像 | `apiuser/login` / `userinfo` **实测返回 `touxiang` 字段**（2026-09-09，可能为 null）：非空 → 用接口值（拼基址，见 `resolveFileUrl`）；为空 → 用 `avatar-placeholder` 兜底；上传成功后展示接口返回路径 | 接口为空时允许兜底 |
    | tabBar / 功能 / 箭头 / 搜索等 UI 图标 | 接口无对应字段 | 允许（装饰性） |
 
 2. 页面/组件引用一律写**绝对路径**：`/static/...`（小程序端 `/static/` 映射到 `src/static/`）。

@@ -1,58 +1,140 @@
 @import "semantic";
 
+// ---------------------------------------------------------------------------
+// 组件层（components，D33）：组件内部唯一引用入口，命名 $comp-{component}-{property}-{variant}
+// ---------------------------------------------------------------------------
+
+// 通用细边框
+$comp-hairline-width: 1rpx;
+
 // 按钮组件
 $comp-button-height-sm: 56rpx;
 $comp-button-height-md: 80rpx;
 $comp-button-height-lg: 104rpx;
 
 $comp-button-padding-x-sm: $spacing-sm;
-$comp-button-padding-x-md: $spacing-md;
-$comp-button-padding-x-lg: $spacing-lg;
+$comp-button-padding-x-md: $spacing-lg;
+$comp-button-padding-x-lg: $spacing-2xl;
 
 $comp-button-radius: $radius-md;
+$comp-button-disabled-opacity: 0.5;
 
 // 导航 / TabBar
 $comp-tab-bar-height: 100rpx;
 $comp-navbar-height: 88rpx;
 // 自定义导航栏：胶囊带独占一行，标题在其下方独立一行
 $comp-navbar-title-height: 88rpx;
+// 注意：AppNavbar.vue 的 TS 侧 TITLE_ROW_RPX = 88 为本值的同步副本，
+// 修改本值必须同步修改 TS 常量（设计文档 L9/B12）
+$comp-navbar-btn-size: 48rpx;
+$comp-navbar-btn-hit: 64rpx;
+$comp-navbar-title-size: $font-title;
+$comp-navbar-bg: $color-primary;
+$comp-navbar-title-color: $color-text-inverse;
 
 // 分段 / 顶部 Tab（共享组件 AppTab 使用）
 $comp-tab-height: 88rpx;
 $comp-tab-item-padding-x: $spacing-md;
 $comp-tab-indicator-width: 40rpx;
 $comp-tab-indicator-height: 4rpx;
+$comp-tab-font-size: $font-body;
+$comp-tab-active-color: $color-primary;
+$comp-tab-inactive-color: $color-text-secondary;
+$comp-tab-indicator-color: $color-primary;
 
 // 弹窗（共享组件 AppPopup 使用）
 $comp-popup-radius: $radius-xl;
-$comp-popup-padding: $spacing-lg;
+$comp-popup-padding: $spacing-2xl;
 $comp-popup-width-center: 600rpx;
 $comp-popup-sheet-max-height: 80vh;
-$comp-popup-mask-bg: rgba-with-alpha($gray-900, 0.5);
+$comp-popup-mask-bg: $color-bg-mask;
+$comp-popup-header-gap: $spacing-sm;
 
 // 头像
 $comp-avatar-size-sm: 80rpx;
 $comp-avatar-size-md: 120rpx;
 $comp-avatar-size-lg: 160rpx;
+$comp-avatar-radius: $radius-full;
+$comp-avatar-border-width: $comp-hairline-width;
+$comp-avatar-border-color: $color-border-light;
+$comp-avatar-bg: $color-bg-tertiary;
 
 // 列表项
 $comp-list-item-min-height: 96rpx;
 $comp-list-item-padding-x: $spacing-md;
-$comp-list-item-border-width: 1rpx;
+$comp-list-item-padding-y: $spacing-xl;
+$comp-list-item-border-width: $comp-hairline-width;
+$comp-list-item-icon-size: 48rpx;
+$comp-list-item-icon-gap: $spacing-md;
+$comp-list-item-arrow-size: 32rpx;
+$comp-list-item-title-size: $font-body;
+$comp-list-item-desc-size: $font-caption;
 
 // 空状态
 $comp-empty-image-size: 240rpx;
+$comp-empty-text-margin-top: $spacing-2xl;
+$comp-empty-text-size: $font-body;
 
 // 用户信息区
-$comp-user-info-padding-y: $spacing-xl;
+$comp-user-info-padding-y: $spacing-3xl;
 
 // 页面
 $comp-page-min-height: 100vh;
-$comp-page-padding: $spacing-md;
+$comp-page-padding: $page-gutter; // 24rpx（原型实测，ADR-004）
 
 // 卡片
-$comp-card-padding: $spacing-lg;
-$comp-card-radius: $radius-lg;
+$comp-card-padding: $spacing-2xl; // 24rpx
+$comp-card-radius: $radius-md;    // 12rpx（原型实测）
+$comp-card-gap: $spacing-lg;      // 卡片之间 16rpx
+$comp-card-border-width: $comp-hairline-width;
+$comp-card-shadow: $shadow-1;
+$comp-card-header-padding: $spacing-2xl $spacing-2xl 0;
+$comp-card-footer-padding: 0 $spacing-2xl $spacing-2xl;
 
-// 通用细边框
-$comp-hairline-width: 1rpx;
+// 输入框（解除对按钮高度的借用）
+$comp-input-height: 88rpx;
+$comp-input-padding-x: $spacing-md;
+$comp-input-font-size: $font-body;
+$comp-input-radius: $radius-sm;
+$comp-input-placeholder-color: $color-text-placeholder;
+$comp-input-icon-size: 40rpx;
+$comp-input-clear-size: 36rpx;
+
+// 标签 / 徽标
+$comp-tag-padding: 4rpx $spacing-sm;
+$comp-tag-font-size: $font-xs;
+$comp-tag-radius: $radius-sm;
+$comp-badge-dot-size: 16rpx;
+$comp-badge-number-min-width: 32rpx;
+
+// 宫格
+$comp-grid-columns: 4;
+$comp-grid-gap: $spacing-2xl;
+$comp-grid-icon-size: 88rpx;
+$comp-grid-icon-radius: $radius-md;
+$comp-grid-label-size: $font-caption;
+$comp-grid-label-gap: $spacing-sm;
+
+// 分割线
+$comp-divider-height: $comp-hairline-width;
+$comp-divider-margin: $section-margin 0;
+
+// 底部固定按钮
+$comp-btn-fixed-height: 96rpx;
+$comp-btn-fixed-offset: $spacing-3xl;
+$comp-btn-fixed-radius: $radius-full;
+$comp-btn-fixed-font-size: $font-title;
+
+// 骨架屏 / 加载
+$comp-skeleton-row-height: 32rpx;
+$comp-skeleton-row-gap: $spacing-lg;
+$comp-skeleton-row-radius: $radius-xs;
+$comp-skeleton-padding: $spacing-2xl;
+$comp-loading-spinner-size: 64rpx;
+$comp-loading-spinner-border: 4rpx;
+$comp-loading-content-padding: $spacing-3xl $spacing-xl;
+
+// 表单控件
+$comp-control-size: 40rpx;
+$comp-control-hit-min: 88rpx;
+$comp-control-gap: $spacing-lg;

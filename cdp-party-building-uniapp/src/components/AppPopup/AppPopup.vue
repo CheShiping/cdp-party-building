@@ -97,7 +97,7 @@ function onMaskTap() {
     width: 100%;
     max-height: $comp-popup-sheet-max-height;
     padding: $comp-popup-padding;
-    background: $color-bg-primary;
+    background: $color-bg-card;
     border-radius: $comp-popup-radius $comp-popup-radius 0 0;
     box-sizing: border-box;
     overflow-y: auto;

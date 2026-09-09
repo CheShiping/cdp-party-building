@@ -1,15 +1,21 @@
 export const PagePaths = {
   HOME: 'pages/index/index',
-  LIST: 'pages/list/index',
-  FORM: 'pages/form/index',
+  SERVICE: 'pages/service/index',
+  AI: 'pages/ai/index',
+  ARCHIVE: 'pages/archive/index',
   PROFILE: 'pages/profile/index',
+  LOGIN: 'pages/login/index',
+  TOPIC: 'pages/topic/index',
 } as const;
 
 export type PagePath = typeof PagePaths[keyof typeof PagePaths];
 
 export const PageTitles: Record<PagePath, string> = {
   [PagePaths.HOME]: '首页',
-  [PagePaths.LIST]: '列表',
-  [PagePaths.FORM]: '表单',
-  [PagePaths.PROFILE]: '我的',
+  [PagePaths.SERVICE]: '党员服务',
+  [PagePaths.AI]: 'AI学习',
+  [PagePaths.ARCHIVE]: '电子档案',
+  [PagePaths.PROFILE]: '个人中心',
+  [PagePaths.LOGIN]: '登录',
+  [PagePaths.TOPIC]: '专题专栏',
 };

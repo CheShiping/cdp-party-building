@@ -10,7 +10,7 @@ interface Props {
   modelValue: string;
   label?: string;
   placeholder?: string;
-  type?: 'text' | 'number';
+  type?: 'text' | 'number' | 'password';
   error?: string;
 }
 
@@ -44,6 +44,7 @@ function onInput(e: InputEvent) {
       :type="type"
       :value="modelValue"
       :placeholder="placeholder"
+      placeholder-class="app-input__placeholder"
       @input="onInput"
     >
     <text
@@ -67,18 +68,22 @@ function onInput(e: InputEvent) {
   }
 
   &__field {
-    height: $comp-button-height-md;
-    padding: 0 $comp-list-item-padding-x;
-    background: $color-bg-primary;
+    height: $comp-input-height;
+    padding: 0 $comp-input-padding-x;
+    background: $color-bg-card;
     border: $comp-hairline-width solid $color-border;
-    border-radius: $comp-button-radius;
-    font-size: $font-body;
+    border-radius: $comp-input-radius;
+    font-size: $comp-input-font-size;
     color: $color-text-primary;
+  }
+
+  &__placeholder {
+    color: $comp-input-placeholder-color;
   }
 
   &__error {
     font-size: $font-caption;
-    color: $color-error;
+    color: $color-error-text;
   }
 }
 </style>

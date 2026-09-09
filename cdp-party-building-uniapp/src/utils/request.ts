@@ -1,98 +1,159 @@
 import { isH5 } from './platform';
+import { API_BASE_URL, TOKEN_HEADER } from '@/constants/api';
+import {
+  getToken,
+  handleUnauthorized,
+  isAuthErrorMessage,
+  isTokenFresh,
+} from './auth';
 
 /**
- * 三端 baseURL 策略：
- * - 微信小程序：必须是已配置的 request 合法域名
- * - H5：开发时通常需要代理或处理 CORS
- * - App：可访问任意 HTTPS 接口
+ * 统一请求层（feat-003）：
+ * - 基址来自 .env VITE_BASE_URL（https://szdj.cdszxjc.com/），模块前缀由调用方拼接
+ * - 鉴权：登录返回的用户 token 放 HTTP Header `token`（2026-09-09 后端实测确认）
+ * - token 超过一天有效期时，通过 relogin 钩子静默重新获取（auth.service 注册）
+ * - 响应信封：{ success, msg, obj, list, js }
  */
-const BASE_URL = import.meta.env.VITE_BASE_URL || '';
-const H5_BASE_URL = import.meta.env.VITE_H5_BASE_URL || BASE_URL;
-const APP_BASE_URL = import.meta.env.VITE_APP_BASE_URL || BASE_URL;
 
-function getBaseUrl(): string {
-  // #ifdef H5
-  return H5_BASE_URL;
-  // #endif
-
-  // #ifdef APP-PLUS
-  return APP_BASE_URL;
-  // #endif
-
-  return BASE_URL;
+export interface ApiResponse<T = unknown> {
+  success: boolean | string;
+  msg?: string | null;
+  obj?: T | null;
+  list?: T[] | null;
+  js?: string | null;
 }
 
-function getToken(): string | null {
-  try {
-    return uni.getStorageSync('app_token') || null;
-  } catch {
-    return null;
-  }
+export interface Envelope<T = unknown> {
+  /** 单对象数据 */
+  obj: T | null;
+  /** 列表数据 */
+  list: T[] | null;
+  /** 解释信息 */
+  js: string;
+  msg: string;
 }
 
 type RequestData = Record<string, unknown>;
 
-interface RequestOptions {
+export interface RequestOptions {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   data?: RequestData;
   headers?: Record<string, string>;
+  /** 是否携带用户 token（默认 true；登录接口传 false） */
+  withAuth?: boolean;
+  /** 是否自动 toast 错误信息（默认 true） */
   showError?: boolean;
-  withToken?: boolean;
+  timeout?: number;
 }
 
-interface ApiErrorResponse {
-  message?: string;
+function isSuccess(success: ApiResponse['success']): boolean {
+  return success === true || success === 'true';
 }
 
-function request<T = unknown>(options: RequestOptions): Promise<T> {
+function toEnvelope<T>(data: ApiResponse<T>): Envelope<T> {
+  return {
+    obj: (data.obj ?? null) as T | null,
+    list: (data.list ?? null) as T[] | null,
+    js: data.js || '',
+    msg: data.msg || '',
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 静默续期钩子：由 auth.service 注册，避免 request ↔ api 循环依赖
+// ---------------------------------------------------------------------------
+type ReloginHook = () => Promise<boolean>;
+let reloginHook: ReloginHook | null = null;
+
+export function registerReloginHook(hook: ReloginHook | null): void {
+  reloginHook = hook;
+}
+
+async function ensureFreshToken(): Promise<boolean> {
+  const token = getToken();
+  if (!token) {
+    handleUnauthorized();
+    return false;
+  }
+  if (isTokenFresh()) return true;
+  // token 超过一天：静默重新获取；失败则走 401 统一处理
+  if (reloginHook) {
+    try {
+      const ok = await reloginHook();
+      if (ok) return true;
+    } catch {
+      // 落入统一处理
+    }
+  }
+  handleUnauthorized();
+  return false;
+}
+
+async function request<T>(options: RequestOptions): Promise<Envelope<T>> {
+  const { withAuth = true, showError = true } = options;
+
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...options.headers,
   };
 
-  if (options.withToken !== false) {
-    const token = getToken();
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
+  if (withAuth) {
+    const ok = await ensureFreshToken();
+    if (!ok) {
+      return Promise.reject(new Error('未登录或登录已过期'));
     }
+    headers[TOKEN_HEADER] = getToken();
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise<Envelope<T>>((resolve, reject) => {
     uni.request({
-      url: `${getBaseUrl()}${options.url}`,
+      url: `${API_BASE_URL}${options.url}`,
       method: options.method || 'GET',
       data: options.data,
       header: headers,
+      timeout: options.timeout || 15000,
       success: (res) => {
-        if (res.statusCode >= 200 && res.statusCode < 300) {
-          resolve(res.data as T);
-        } else if (res.statusCode === 401) {
-          // 登录态失效，统一处理
-          uni.showToast({ title: '登录已过期，请重新登录', icon: 'none' });
-          reject(new Error('Unauthorized'));
-        } else {
-          const message = (res.data as ApiErrorResponse)?.message || `请求失败: ${res.statusCode}`;
-          if (options.showError !== false) {
-            uni.showToast({ title: message, icon: 'none' });
-          }
-          reject(new Error(message));
+        if (res.statusCode === 401 || res.statusCode === 403) {
+          handleUnauthorized();
+          reject(new Error('未登录或登录已过期'));
+          return;
         }
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+          const message = `请求失败: ${res.statusCode}`;
+          if (showError) uni.showToast({ title: message, icon: 'none' });
+          reject(new Error(message));
+          return;
+        }
+
+        const body = res.data as ApiResponse<T>;
+        if (isSuccess(body?.success)) {
+          resolve(toEnvelope(body));
+          return;
+        }
+
+        const message = body?.msg || '操作失败';
+        if (withAuth && isAuthErrorMessage(message)) {
+          handleUnauthorized();
+          reject(new Error(message));
+          return;
+        }
+        if (showError) uni.showToast({ title: message, icon: 'none' });
+        reject(new Error(message));
       },
       fail: (err) => {
         const message = isH5()
           ? '网络异常，请检查跨域或代理配置'
           : '网络异常，请稍后重试';
-        if (options.showError !== false) {
-          uni.showToast({ title: message, icon: 'none' });
-        }
-        reject(new Error(JSON.stringify(err)));
+        if (showError) uni.showToast({ title: message, icon: 'none' });
+        reject(new Error(`${message}(${err.errMsg || ''})`));
       },
     });
   });
 }
 
 export const requestClient = {
+  /** GET：data 作为 query 参数 */
   get: <T = unknown>(url: string, data?: RequestData, options?: Partial<RequestOptions>) =>
     request<T>({ url, method: 'GET', data, ...options }),
   post: <T = unknown>(url: string, data?: RequestData, options?: Partial<RequestOptions>) =>

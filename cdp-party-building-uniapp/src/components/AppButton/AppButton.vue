@@ -40,8 +40,9 @@ function handleClick(event: MouseEvent) {
   border: none;
   border-radius: $comp-button-radius;
   font-size: $font-body;
-  font-weight: 500;
-  transition: opacity 0.2s;
+  // 500 在部分安卓机型不生效，需要视觉 500 一律用 600（设计文档 5.2）
+  font-weight: $font-weight-semibold;
+  transition: opacity $duration-fast $ease-out;
 
   &::after {
     display: none;
@@ -49,7 +50,11 @@ function handleClick(event: MouseEvent) {
 
   &--primary {
     background: $color-primary;
-    color: $color-bg-primary;
+    color: $color-text-inverse;
+
+    &:active {
+      background: $primary-600;
+    }
   }
 
   &--secondary {
@@ -80,7 +85,7 @@ function handleClick(event: MouseEvent) {
   }
 
   &--disabled {
-    opacity: 0.5;
+    opacity: $comp-button-disabled-opacity;
   }
 
   &:active {

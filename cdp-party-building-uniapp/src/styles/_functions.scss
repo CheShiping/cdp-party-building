@@ -28,19 +28,19 @@
   @return $theme-primary;
 }
 
-@function gray-palette($level) {
+@function gold-palette($level) {
   $mix-white: (50, 100, 200, 300, 400);
   $mix-black: (600, 700, 800, 900);
 
   @if list.index($mix-white, $level) {
     $ratio: math.div(1000 - $level, 1000) * 90%;
-    @return color.mix(#ffffff, $theme-gray-base, $ratio);
+    @return color.mix(#ffffff, $theme-gold, $ratio);
   }
 
   @if list.index($mix-black, $level) {
     $ratio: math.div($level - 500, 1000) * 90%;
-    @return color.mix(#000000, $theme-gray-base, $ratio);
+    @return color.mix(#000000, $theme-gold, $ratio);
   }
 
-  @return $theme-gray-base;
+  @return $theme-gold;
 }

@@ -1,7 +1,11 @@
 @import "../config/theme-config";
 @import "../functions";
 
-// 主色阶
+// ---------------------------------------------------------------------------
+// 色阶层（primitive）：业务代码禁止直接引用本层，一律走 _semantic.scss 语义 Token
+// ---------------------------------------------------------------------------
+
+// 主色阶（生成式，与 sync-theme.js 同源）
 $primary-50: primary-palette(50);
 $primary-100: primary-palette(100);
 $primary-200: primary-palette(200);
@@ -13,44 +17,116 @@ $primary-700: primary-palette(700);
 $primary-800: primary-palette(800);
 $primary-900: primary-palette(900);
 
-// 灰阶
-$gray-50: gray-palette(50);
-$gray-100: gray-palette(100);
-$gray-200: gray-palette(200);
-$gray-300: gray-palette(300);
-$gray-400: gray-palette(400);
-$gray-500: gray-palette(500);
-$gray-600: gray-palette(600);
-$gray-700: gray-palette(700);
-$gray-800: gray-palette(800);
-$gray-900: gray-palette(900);
+// 金色阶（生成式，与 sync-theme.js 同源）
+$gold-50: gold-palette(50);
+$gold-100: gold-palette(100);
+$gold-200: gold-palette(200);
+$gold-300: gold-palette(300);
+$gold-400: gold-palette(400);
+$gold-500: gold-palette(500);
+$gold-600: gold-palette(600);
+$gold-700: gold-palette(700);
+$gold-800: gold-palette(800);
+$gold-900: gold-palette(900);
 
-// 间距阶
+// 中性显式 10 阶（theme.json.colors.neutral，ADR-002 锚点优先）
+$gray-50: $theme-gray-50;
+$gray-100: $theme-gray-100;
+$gray-200: $theme-gray-200;
+$gray-300: $theme-gray-300;
+$gray-400: $theme-gray-400;
+$gray-500: $theme-gray-500;
+$gray-600: $theme-gray-600;
+$gray-700: $theme-gray-700;
+$gray-800: $theme-gray-800;
+$gray-900: $theme-gray-900;
+
+// ---------------------------------------------------------------------------
+// 间距阶（base 4rpx，标准 4 的倍数）
+// ---------------------------------------------------------------------------
+$space-0: 0;
 $space-1: $theme-spacing-base * 1;
 $space-2: $theme-spacing-base * 2;
 $space-3: $theme-spacing-base * 3;
 $space-4: $theme-spacing-base * 4;
-$space-5: $theme-spacing-base * 6;
-$space-6: $theme-spacing-base * 8;
-$space-7: $theme-spacing-base * 10;
-$space-8: $theme-spacing-base * 12;
+$space-5: $theme-spacing-base * 5;
+$space-6: $theme-spacing-base * 6;
+$space-8: $theme-spacing-base * 8;
+$space-10: $theme-spacing-base * 10;
+$space-12: $theme-spacing-base * 12;
+$space-16: $theme-spacing-base * 16;
 
-// 字体阶
-$font-xs: $theme-font-base * 1;
-$font-sm: $theme-font-base * 1.1667;
-$font-md: $theme-font-base * 1.3333;
-$font-lg: $theme-font-base * 1.5;
-$font-xl: $theme-font-base * 2;
-$font-xxl: $theme-font-base * 2.5;
+// ---------------------------------------------------------------------------
+// 字号阶（base 4rpx；正文 28rpx，修复 B1）
+// ---------------------------------------------------------------------------
+$font-xs: $theme-font-base * 5;   // 20rpx
+$font-sm: $theme-font-base * 6;   // 24rpx
+$font-md: $theme-font-base * 7;   // 28rpx
+$font-lg: $theme-font-base * 8;   // 32rpx
+$font-xl: $theme-font-base * 9;   // 36rpx
+$font-xxl: $theme-font-base * 10; // 40rpx
+$font-xxxl: $theme-font-base * 12; // 48rpx
 
-// 圆角阶
-$radius-sm: $theme-radius-base * 1;
-$radius-md: $theme-radius-base * 2;
-$radius-lg: $theme-radius-base * 3;
-$radius-xl: $theme-radius-base * 4;
+// ---------------------------------------------------------------------------
+// 圆角阶（卡片 12rpx 与原型实测吻合，修复 B2）
+// ---------------------------------------------------------------------------
+$radius-xs: $theme-radius-base * 1;   // 4rpx
+$radius-sm: $theme-radius-base * 2;   // 8rpx
+$radius-md: $theme-radius-base * 3;   // 12rpx（卡片/图片/宫格图标底）
+$radius-lg: $theme-radius-base * 4;   // 16rpx
+$radius-xl: $theme-radius-base * 6;   // 24rpx
 $radius-full: 9999rpx;
 
+// ---------------------------------------------------------------------------
 // 阴影阶
+// ---------------------------------------------------------------------------
+$shadow-none: none;
 $shadow-1: 0 2rpx 8rpx rgba-with-alpha($gray-900, 0.04);
 $shadow-2: 0 4rpx 12rpx rgba-with-alpha($gray-900, 0.08);
 $shadow-3: 0 8rpx 24rpx rgba-with-alpha($gray-900, 0.12);
+
+// ---------------------------------------------------------------------------
+// Z 层级（修复 B4，D09）
+// ---------------------------------------------------------------------------
+$z-base: 0;
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-overlay: 300;
+$z-modal: 400;
+$z-toast: 500;
+$z-tooltip: 600;
+$z-max: 999;
+
+// ---------------------------------------------------------------------------
+// 动效（修复 B5，D08：动画只做 transform/opacity）
+// ---------------------------------------------------------------------------
+$duration-fast: 150ms;
+$duration-normal: 250ms;
+$duration-slow: 400ms;
+$ease-in: cubic-bezier(0.4, 0, 1, 1);
+$ease-out: cubic-bezier(0, 0, 0.2, 1);
+$ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// ---------------------------------------------------------------------------
+// 行高 / 字重 / 字体族
+// ---------------------------------------------------------------------------
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.8;
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$font-family-base: -apple-system, BlinkMacSystemFont, "PingFang SC",
+  "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+$font-family-number: "DIN Alternate", "Helvetica Neue", Arial, sans-serif;
+
+// ---------------------------------------------------------------------------
+// 布局常量（Page Gutter 24rpx 为 6 张原型图卡片左缘实测，ADR-004）
+// ---------------------------------------------------------------------------
+$page-gutter: $space-6;      // 24rpx
+$section-padding: $space-6;  // 24rpx：模块内边距
+$section-margin: $space-4;   // 16rpx：模块间距

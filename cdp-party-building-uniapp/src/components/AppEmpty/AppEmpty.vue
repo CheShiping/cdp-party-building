@@ -32,12 +32,12 @@ withDefaults(
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: $spacing-xl;
+  padding: $spacing-3xl;
 
   &__image {
     width: $comp-empty-image-size;
     height: $comp-empty-image-size;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
   }
 
   &__title {
@@ -47,8 +47,9 @@ withDefaults(
   }
 
   &__desc {
-    font-size: $font-body;
-    color: $color-text-secondary;
+    margin-top: $comp-empty-text-margin-top;
+    font-size: $comp-empty-text-size;
+    color: $color-text-tertiary;
   }
 }
 </style>

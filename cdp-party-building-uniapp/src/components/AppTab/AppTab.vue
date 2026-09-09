@@ -52,12 +52,12 @@ function select(key: TabKey) {
     justify-content: center;
     height: 100%;
     padding: 0 $comp-tab-item-padding-x;
-    color: $color-text-secondary;
-    font-size: $font-body;
+    color: $comp-tab-inactive-color;
+    font-size: $comp-tab-font-size;
 
     &--active {
-      color: $color-primary;
-      font-weight: 600;
+      color: $comp-tab-active-color;
+      font-weight: $font-weight-semibold;
 
       &::after {
         content: '';
@@ -67,7 +67,7 @@ function select(key: TabKey) {
         width: $comp-tab-indicator-width;
         height: $comp-tab-indicator-height;
         border-radius: $radius-full;
-        background: $color-primary;
+        background: $comp-tab-indicator-color;
         transform: translateX(-50%);
       }
     }

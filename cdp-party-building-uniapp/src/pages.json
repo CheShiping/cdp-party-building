@@ -3,59 +3,91 @@
     {
       "path": "pages/index/index",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "首页"
       }
     },
     {
-      "path": "pages/list/index",
+      "path": "pages/ai/index",
       "style": {
-        "navigationBarTitleText": "列表",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
+        "navigationBarTitleText": "AI学习"
       }
     },
     {
-      "path": "pages/form/index",
+      "path": "pages/service/index",
       "style": {
-        "navigationBarTitleText": "表单"
+        "navigationBarTitleText": "党员服务"
+      }
+    },
+    {
+      "path": "pages/archive/index",
+      "style": {
+        "navigationBarTitleText": "电子档案"
       }
     },
     {
       "path": "pages/profile/index",
       "style": {
-        "navigationBarTitleText": "我的"
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "个人中心"
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "pages/topic/index",
+      "style": {
+        "navigationBarTitleText": "专题专栏",
+        "enablePullDownRefresh": true
       }
     }
   ],
   "globalStyle": {
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "white",
     "navigationBarTitleText": "CDP 智慧党建",
-    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarBackgroundColor": "#c82028",
     "backgroundColor": "#f5f5f5"
   },
   "tabBar": {
-    "color": "#9ca3af",
-    "selectedColor": "#c62828",
+    "color": "#acacac",
+    "selectedColor": "#c82028",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "static/tab-bar/home.png",
-        "selectedIconPath": "static/tab-bar/home-active.png"
+        "iconPath": "static/tab-bar/tab-home.png",
+        "selectedIconPath": "static/tab-bar/tab-home-active.png"
       },
       {
-        "pagePath": "pages/list/index",
-        "text": "列表",
-        "iconPath": "static/tab-bar/data.png",
-        "selectedIconPath": "static/tab-bar/data-active.png"
+        "pagePath": "pages/service/index",
+        "text": "党员服务",
+        "iconPath": "static/tab-bar/tab-service.png",
+        "selectedIconPath": "static/tab-bar/tab-service-active.png"
+      },
+      {
+        "pagePath": "pages/ai/index",
+        "text": "AI学习",
+        "iconPath": "static/tab-bar/tab-ai.png",
+        "selectedIconPath": "static/tab-bar/tab-ai-active.png"
+      },
+      {
+        "pagePath": "pages/archive/index",
+        "text": "电子档案",
+        "iconPath": "static/tab-bar/tab-archive.png",
+        "selectedIconPath": "static/tab-bar/tab-archive-active.png"
       },
       {
         "pagePath": "pages/profile/index",
-        "text": "我的",
-        "iconPath": "static/tab-bar/profile.png",
-        "selectedIconPath": "static/tab-bar/profile-active.png"
+        "text": "个人中心",
+        "iconPath": "static/tab-bar/tab-mine.png",
+        "selectedIconPath": "static/tab-bar/tab-mine-active.png"
       }
     ]
   }

@@ -1,39 +1,77 @@
 @import "primitive";
 
-// 语义颜色 Token
+// ---------------------------------------------------------------------------
+// 语义层（semantic）：业务代码唯一引用入口（D01）
+// ---------------------------------------------------------------------------
+
+// 主色
 $color-primary: $primary-500;
 $color-primary-light: $primary-100;
 $color-primary-dark: $primary-700;
+$color-primary-soft: $theme-soft-primary;        // #FFEEEE 主色浅底（标签/徽标底）
+$color-primary-gradient: linear-gradient(180deg, #c42026, #da2a2b); // 首页头部实测
 
-$color-text-primary: $gray-900;
-$color-text-secondary: $gray-500;
-$color-text-tertiary: $gray-400;
-$color-text-placeholder: $gray-300;
+// 金色（荣誉/档案）
+$color-gold: $gold-500;
+$color-gold-light: $theme-gold-light; // #CD9C5A 原型实测
+$color-gold-dark: $gold-700;
 
-$color-bg-primary: #ffffff;
-$color-bg-secondary: $gray-50;
-$color-bg-tertiary: $gray-100;
+// 文字（实测锚点，见设计文档 4.4）
+$color-text-primary: $gray-900;       // #333333
+$color-text-secondary: $gray-600;     // #666666
+$color-text-tertiary: $gray-500;      // #808080（仅 ≥28rpx 或 24rpx+600，D34 受控例外）
+$color-text-disabled: $gray-400;      // #ACACAC
+$color-text-placeholder: $gray-400;   // #ACACAC
+$color-text-inverse: #ffffff;
 
-$color-border: $gray-200;
-$color-border-light: $gray-100;
+// 背景（两种页面底并存是原型事实：一页一底，禁止混用）
+$color-bg-card: #ffffff;
+$color-bg-page: $theme-soft-page;       // #F5F5F5 默认页底（首页/AI学习/详情）
+$color-bg-page-alt: $theme-soft-page-alt; // #F2F5FA 冷调页底（档案/服务/个人中心）
+$color-bg-tertiary: $gray-100;          // #F0F0F0 输入区/骨架屏
+$color-bg-warm: $theme-soft-warm;       // #FDF4ED 专题/档案/荣誉卡
+$color-bg-mask: rgba-with-alpha($gray-900, 0.6);
 
+// 边框
+$color-border: $gray-200;         // #E5E5E5
+$color-border-light: $gray-100;   // #F0F0F0
+
+// 功能色（基色：仅图标/底色/边框/图形；承载文字一律用 -text 变体，D34）
 $color-success: $theme-success;
-$color-warning: $theme-warning;
-$color-error: $theme-error;
-$color-info: $theme-info;
+$color-success-text: $theme-text-safe-success;
+$color-success-soft: $theme-soft-success;
 
-// 语义间距 Token
+$color-warning: $theme-warning;
+$color-warning-text: $theme-text-safe-warning;
+
+$color-error: $theme-error;
+$color-error-text: $theme-text-safe-error;
+$color-error-deep: $primary-900;
+
+$color-info: $theme-info;
+$color-info-text: $theme-text-safe-info;
+
+// 宫格强调色（仅图标/分类标记，禁止作文字色）
+$color-accent-red: $theme-accent-red;
+$color-accent-amber: $theme-accent-amber;
+$color-accent-purple: $theme-accent-purple;
+$color-accent-blue: $theme-accent-blue;
+$color-accent-coral: $theme-accent-coral;
+$color-accent-gold: $theme-accent-gold;
+
+// 语义间距 Token（重排，修复 B3：xs4/sm8/md12/lg16/xl20/2xl24/3xl32/4xl48）
 $spacing-xs: $space-1;
 $spacing-sm: $space-2;
-$spacing-default: $space-3;
-$spacing-md: $space-4;
-$spacing-lg: $space-5;
-$spacing-xl: $space-6;
-$spacing-xxl: $space-8;
+$spacing-md: $space-3;
+$spacing-lg: $space-4;
+$spacing-xl: $space-5;
+$spacing-2xl: $space-6;
+$spacing-3xl: $space-8;
+$spacing-4xl: $space-12;
 
-// 语义字体 Token
-$font-caption: $font-xs;
-$font-body: $font-sm;
+// 语义字体 Token（基数 4rpx，正文 28rpx）
+$font-caption: $font-sm;
+$font-body: $font-md;
 $font-subtitle: $font-md;
 $font-title: $font-lg;
 $font-headline: $font-xl;

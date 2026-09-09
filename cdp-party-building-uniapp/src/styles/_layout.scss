@@ -1,0 +1,96 @@
+// 布局 zone 类（style-skill §18）：页面骨架统一用 .lyt-*，全页滚动禁 scroll-view（D11）
+// 由 variables.scss 统一注入，勿在本文件内 @import（避免循环引入）
+
+.lyt-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $color-bg-page;
+}
+
+// 头部（导航区）：主色底
+.lyt-header {
+  background-color: $color-primary;
+}
+
+// 头部（导航区）：主色纵向渐变（首页等深浅头部实测）
+.lyt-header-gradient {
+  background: $color-primary-gradient;
+}
+
+// 头部延伸区（用户信息 / 搜索等，红底白字）
+.lyt-hero {
+  padding: $spacing-lg $page-gutter $spacing-2xl;
+  background-color: $color-primary;
+  color: $color-text-inverse;
+}
+
+// 内容主体
+.lyt-body {
+  flex: 1;
+  padding: $section-margin $page-gutter;
+  box-sizing: border-box;
+}
+
+// 模块（卡片容器）
+.lyt-section {
+  padding: $section-padding;
+  margin-bottom: $section-margin;
+  background-color: $color-bg-card;
+  border-radius: $radius-md;
+}
+
+// 透明模块（无卡片底）
+.lyt-section-plain {
+  padding: $section-padding;
+  margin-bottom: $section-margin;
+}
+
+// 列表单元行
+.lyt-cell {
+  display: flex;
+  align-items: center;
+  min-height: $comp-list-item-min-height;
+  padding: $comp-list-item-padding-y $comp-list-item-padding-x;
+  box-sizing: border-box;
+}
+
+// 底部固定区
+.lyt-footer {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: $color-bg-card;
+}
+
+// 两列 / 三列栅格
+.lyt-col2 {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -#{$spacing-sm};
+
+  > .lyt-col-item {
+    width: 50%;
+    box-sizing: border-box;
+    padding: $spacing-sm;
+  }
+}
+
+.lyt-col3 {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -#{$spacing-sm};
+
+  > .lyt-col-item {
+    width: 33.3333%;
+    box-sizing: border-box;
+    padding: $spacing-sm;
+  }
+}
+
+// 吸顶
+.lyt-sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  background-color: $color-bg-card;
+}

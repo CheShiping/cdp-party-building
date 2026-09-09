@@ -19,6 +19,7 @@
     "prebuild:app": "npm run theme:sync",
     "build:app": "uni build --platform app",
     "lint": "eslint src --ext .ts,.vue",
+    "check:md5": "node scripts/check-md5.js",
     "verify": "node scripts/verify.js"
   },
   "dependencies": {

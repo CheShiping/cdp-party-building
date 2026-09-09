@@ -1,0 +1,67 @@
+// 动画预设（D08：只做 transform/opacity）。本项目唯一允许定义 @keyframes 的文件；
+// 业务内禁止新定义 @keyframes（Popup 组件级除外），交互动画用 v-if 重新挂载触发。
+// 由 variables.scss 统一注入，勿在本文件内 @import（避免循环引入）
+
+@keyframes anim-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes anim-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes anim-slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes anim-slide-down {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes anim-scale-in {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes anim-shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes anim-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: anim-fade-in $duration-normal $ease-out both;
+}
+
+.animate-fade-out {
+  animation: anim-fade-out $duration-normal $ease-in both;
+}
+
+.animate-slide-up {
+  animation: anim-slide-up $duration-slow $ease-out both;
+}
+
+.animate-slide-down {
+  animation: anim-slide-down $duration-slow $ease-in both;
+}
+
+.animate-scale-in {
+  animation: anim-scale-in $duration-normal $ease-spring both;
+}
+
+// 骨架屏微光：元素自身提供一个浅色 ::after 或背景渐变配合
+.animate-shimmer {
+  animation: anim-shimmer 1.2s $ease-in-out infinite;
+}
+
+.animate-spin {
+  animation: anim-spin 0.8s linear infinite;
+}

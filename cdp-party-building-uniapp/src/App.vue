@@ -1,8 +1,18 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
+import { bootstrap } from '@/services/auth.service';
 
 onLaunch(() => {
-  console.log('App Launch');
+  // 启动引导：恢复登录态；token 超过一天则静默重新获取（feat-003）
+  bootstrap().then(({ needLogin }) => {
+    if (!needLogin) return;
+    const pages = getCurrentPages();
+    const currentRoute = pages.length ? `/${pages[pages.length - 1]!.route}` : '';
+    if (currentRoute !== '/pages/login/index') {
+      uni.reLaunch({ url: '/pages/login/index' });
+    }
+  });
+
   // #ifdef MP-WEIXIN
   // 版本更新检查（仅微信小程序）
   const updateManager = uni.getUpdateManager();

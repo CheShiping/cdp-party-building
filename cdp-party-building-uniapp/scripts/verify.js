@@ -26,6 +26,7 @@ let failed = false;
 try {
   run('npm run theme:sync');
   run('npm run theme:check');
+  run('npm run check:md5');
   run('npm run lint');
   run('npm run build:h5');
 

@@ -1,3 +1,12 @@
+// 统一出口：vite.config.ts additionalData 全局注入；App.vue 经 global.scss 引入
+// 注意：本文件只做 @import 汇总，禁止定义任何变量/类
 @import "tokens/semantic";
 @import "tokens/components";
 @import "mixins";
+
+// 全局类基座（类定义文件放最后，确保引用到上方 Token）
+@import "typography";
+@import "utilities";
+@import "layout";
+@import "page";
+@import "animations";

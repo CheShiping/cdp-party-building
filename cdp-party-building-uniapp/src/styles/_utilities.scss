@@ -1,0 +1,94 @@
+// Utility 工具类（D30）：flex / gap / 文本 / 字重 / 背景 / 圆角 / 阴影 / 间距
+// 由 variables.scss 统一注入，勿在本文件内 @import（避免循环引入）
+
+/* flex */
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-center { @include flex-center; }
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-1 { flex: 1; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+
+/* gap（语义阶梯） */
+.gap-1 { gap: $spacing-xs; }
+.gap-2 { gap: $spacing-sm; }
+.gap-3 { gap: $spacing-md; }
+.gap-4 { gap: $spacing-lg; }
+.gap-6 { gap: $spacing-2xl; }
+.gap-8 { gap: $spacing-3xl; }
+
+/* 文本对齐 */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* 文本省略 */
+.text-ellipsis { @include text-ellipsis; }
+.text-ellipsis-2 { @include multi-ellipsis(2); }
+.text-ellipsis-3 { @include multi-ellipsis(3); }
+
+/* 文字色 */
+.text-color-primary { color: $color-text-primary; }
+.text-color-secondary { color: $color-text-secondary; }
+.text-color-tertiary { color: $color-text-tertiary; }
+.text-color-disabled { color: $color-text-disabled; }
+.text-color-inverse { color: $color-text-inverse; }
+.text-color-brand { color: $color-primary; }
+
+/* 字重（500 在部分安卓不生效，需要视觉 500 用 600） */
+.font-normal { font-weight: $font-weight-normal; }
+.font-medium { font-weight: $font-weight-semibold; }
+.font-semibold { font-weight: $font-weight-semibold; }
+.font-bold { font-weight: $font-weight-bold; }
+
+/* 背景 */
+.bg-card { background-color: $color-bg-card; }
+.bg-page { background-color: $color-bg-page; }
+.bg-page-alt { background-color: $color-bg-page-alt; }
+.bg-tertiary { background-color: $color-bg-tertiary; }
+.bg-warm { background-color: $color-bg-warm; }
+.bg-brand { background-color: $color-primary; }
+.bg-brand-soft { background-color: $color-primary-soft; }
+
+/* 圆角 */
+.rounded-xs { border-radius: $radius-xs; }
+.rounded-sm { border-radius: $radius-sm; }
+.rounded-md { border-radius: $radius-md; }
+.rounded-lg { border-radius: $radius-lg; }
+.rounded-xl { border-radius: $radius-xl; }
+.rounded-full { border-radius: $radius-full; }
+
+/* 阴影 */
+.shadow-1 { box-shadow: $shadow-1; }
+.shadow-2 { box-shadow: $shadow-2; }
+.shadow-3 { box-shadow: $shadow-3; }
+
+/* 内边距 */
+.p-3 { padding: $spacing-md; }
+.p-4 { padding: $spacing-lg; }
+.p-6 { padding: $spacing-2xl; }
+.px-3 { padding-left: $spacing-md; padding-right: $spacing-md; }
+.px-4 { padding-left: $spacing-lg; padding-right: $spacing-lg; }
+.px-6 { padding-left: $spacing-2xl; padding-right: $spacing-2xl; }
+.py-3 { padding-top: $spacing-md; padding-bottom: $spacing-md; }
+.py-4 { padding-top: $spacing-lg; padding-bottom: $spacing-lg; }
+.py-6 { padding-top: $spacing-2xl; padding-bottom: $spacing-2xl; }
+
+/* 外边距 */
+.mt-2 { margin-top: $spacing-sm; }
+.mt-3 { margin-top: $spacing-md; }
+.mt-4 { margin-top: $spacing-lg; }
+.mt-6 { margin-top: $spacing-2xl; }
+.mb-2 { margin-bottom: $spacing-sm; }
+.mb-3 { margin-bottom: $spacing-md; }
+.mb-4 { margin-bottom: $spacing-lg; }
+.mb-6 { margin-bottom: $spacing-2xl; }
+.ml-2 { margin-left: $spacing-sm; }
+.ml-3 { margin-left: $spacing-md; }
+.mr-2 { margin-right: $spacing-sm; }
+.mr-3 { margin-right: $spacing-md; }

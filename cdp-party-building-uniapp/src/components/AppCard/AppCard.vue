@@ -9,7 +9,7 @@
 <style lang="scss" scoped>
 .app-card {
   padding: $comp-card-padding;
-  background: $color-bg-primary;
+  background: $color-bg-card;
   border-radius: $comp-card-radius;
   box-shadow: $shadow-1;
 }

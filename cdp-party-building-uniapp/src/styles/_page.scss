@@ -1,0 +1,48 @@
+// 页面级公共类：容器 / 模块 / 分割线（D14 / D17 / D20）
+// 由 variables.scss 统一注入，勿在本文件内 @import（避免循环引入）
+
+.page-container {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: $section-margin $page-gutter;
+  background-color: $color-bg-page;
+}
+
+.page-section {
+  padding: $section-padding;
+  margin-bottom: $section-margin;
+  background-color: $color-bg-card;
+  border-radius: $radius-md;
+  box-shadow: $shadow-1;
+}
+
+.page-section-first {
+  margin-top: 0;
+}
+
+.page-section-last {
+  margin-bottom: 0;
+}
+
+.page-fullwidth {
+  margin-left: -$page-gutter;
+  margin-right: -$page-gutter;
+}
+
+.section {
+  padding: $section-padding;
+  margin-bottom: $section-margin;
+}
+
+.section-plain {
+  padding: $section-padding;
+  margin-bottom: $section-margin;
+  background-color: transparent;
+}
+
+// 分割线（D20：全项目唯一细线实现）
+.divider {
+  height: $comp-divider-height;
+  margin: $comp-divider-margin;
+  background-color: $color-border-light;
+}

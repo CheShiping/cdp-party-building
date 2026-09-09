@@ -2,22 +2,56 @@
 // 修改 theme.json 后运行 npm run theme:sync 同步
 
 // 主色
-$theme-primary: #c62828;
+$theme-primary: #c82028;
 
-// 功能色
+// 金色（荣誉/档案，党徽金）
+$theme-gold: #bb7600;
+$theme-gold-light: #cd9c5a;
+
+// 功能色（原型基色；承载文字时必须用 textSafe 文本安全变体）
 $theme-success: #4caf50;
-$theme-warning: #ff9800;
-$theme-error: #f44336;
-$theme-info: #2196f3;
+$theme-warning: #ffaf10;
+$theme-error: #f55a56;
+$theme-info: #7087f1;
 
-// 灰阶基础
-$theme-gray-base: #6b7280;
+// 功能色文本安全变体（WCAG AA，D34）
+$theme-text-safe-success: #2e7d32;
+$theme-text-safe-warning: #a86400;
+$theme-text-safe-error: #d32f2f;
+$theme-text-safe-info: #4a5fc1;
+
+// 宫格强调色（仅图标/图形，禁止作文字色）
+$theme-accent-red: #f55a56;
+$theme-accent-amber: #ffaf10;
+$theme-accent-purple: #d895f2;
+$theme-accent-blue: #7087f1;
+$theme-accent-coral: #f47451;
+$theme-accent-gold: #bb7600;
+
+// 浅底色（原型实测）
+$theme-soft-primary: #ffeeee;
+$theme-soft-warm: #fdf4ed;
+$theme-soft-page: #f5f5f5;
+$theme-soft-page-alt: #f2f5fa;
+$theme-soft-success: #d8f0d0;
+
+// 中性显式 10 阶（ADR-002：锚点优先，非生成式）
+$theme-gray-50: #f5f5f5;
+$theme-gray-100: #f0f0f0;
+$theme-gray-200: #e5e5e5;
+$theme-gray-300: #d4d4d4;
+$theme-gray-400: #acacac;
+$theme-gray-500: #808080;
+$theme-gray-600: #666666;
+$theme-gray-700: #4d4d4d;
+$theme-gray-800: #3d3d3d;
+$theme-gray-900: #333333;
 
 // 间距基数
 $theme-spacing-base: 4rpx;
 
 // 字体基数
-$theme-font-base: 12rpx;
+$theme-font-base: 4rpx;
 
 // 圆角基数
 $theme-radius-base: 4rpx;

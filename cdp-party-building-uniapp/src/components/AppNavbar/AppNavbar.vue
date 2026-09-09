@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { COLOR_BG_PRIMARY, COLOR_TEXT_PRIMARY } from '@/constants/colors';
+import { COLOR_BG_CARD, COLOR_TEXT_PRIMARY } from '@/constants/colors';
 
 interface Props {
   title?: string;
@@ -12,7 +12,7 @@ interface Props {
 withDefaults(defineProps<Props>(), {
   title: '',
   showBack: true,
-  bgColor: COLOR_BG_PRIMARY,
+  bgColor: COLOR_BG_CARD,
   color: COLOR_TEXT_PRIMARY,
 });
 
@@ -20,7 +20,7 @@ const emit = defineEmits<{
   back: [];
 }>();
 
-const TITLE_ROW_RPX = 88; // 与 $comp-navbar-title-height 默认值对齐
+const TITLE_ROW_RPX = 88; // 与 $comp-navbar-title-height 默认值对齐；改此值必须同步 _components.scss 的 $comp-navbar-title-height
 
 const systemInfo = uni.getSystemInfoSync();
 const menuInfo =
@@ -103,13 +103,13 @@ function handleBack() {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: $z-max;
   box-sizing: border-box;
 
   &__capsule {
     display: flex;
     align-items: center;
-    padding: 0 $spacing-md;
+    padding: 0 $spacing-lg;
     box-sizing: border-box;
   }
 
@@ -117,8 +117,8 @@ function handleBack() {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 64rpx;
-    height: 64rpx;
+    width: $comp-navbar-btn-hit;
+    height: $comp-navbar-btn-hit;
   }
 
   &__back-icon {
@@ -130,7 +130,7 @@ function handleBack() {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 $spacing-md;
+    padding: 0 $spacing-lg;
     box-sizing: border-box;
   }
 

@@ -9,6 +9,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  server: {
+    proxy: {
+      // H5 开发态代理：后端不支持 CORS，浏览器端请求走同源代理转发
+      '/apituwen': { target: 'https://szdj.cdszxjc.com', changeOrigin: true, secure: true },
+      '/apiliuyan': { target: 'https://szdj.cdszxjc.com', changeOrigin: true, secure: true },
+      '/apiuser': { target: 'https://szdj.cdszxjc.com', changeOrigin: true, secure: true },
+    },
+  },
   css: {
     preprocessorOptions: {
       scss: {
