@@ -129,6 +129,28 @@ export function apiTuwenCaozuo(
   return requestClient.get<unknown>(`${TUWEN}/tuwencaozuo`, { tuwenid, leixing }, options);
 }
 
+/** 图文操作列表项（apituwen/tuwencaozuoliebiao 返回字段，含操作时间 caozuoriqi） */
+export interface TuwenActionItem extends TuwenItem {
+  /** 执行操作的日期 */
+  caozuoriqi?: string | null;
+}
+
+/**
+ * 图文操作列表（apituwen/tuwencaozuoliebiao）：我的收藏（leixing=1）/ 浏览记录（leixing=0 查看、2 推送点开）。
+ * 实测 `tuwenleibieid` 非必传（2026-09-16），`obj.ossdir` 提供图片前缀。
+ */
+export function apiTuwenCaozuoLiebiao(
+  leixing: number,
+  page = 1,
+  pagesize = 20,
+): Promise<Envelope<TuwenActionItem>> {
+  return requestClient.get<TuwenActionItem>(`${TUWEN}/tuwencaozuoliebiao`, {
+    page,
+    pagesize,
+    leixing,
+  });
+}
+
 /**
  * 图文操作记录（tuwencaozuojilu）：接口返回逗号分隔的图文 id 字符串（如 `"17,16,5"`），
  * 用于判断当前图文是否已收藏（leixing=1）。失败静默（仅辅助状态查询）。

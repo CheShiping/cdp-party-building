@@ -72,6 +72,13 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "档案详情"
       }
+    },
+    {
+      "path": "pages/collection/index",
+      "style": {
+        "navigationBarTitleText": "我的收藏",
+        "enablePullDownRefresh": true
+      }
     }
   ],
   "globalStyle": {

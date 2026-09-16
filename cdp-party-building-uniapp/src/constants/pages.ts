@@ -10,6 +10,7 @@ export const PagePaths = {
   WEBVIEW: 'pages/webview/index',
   MESSAGE: 'pages/message/index',
   ARCHIVE_DETAIL: 'pages/archive-detail/index',
+  COLLECTION: 'pages/collection/index',
 } as const;
 
 export type PagePath = typeof PagePaths[keyof typeof PagePaths];
@@ -26,4 +27,5 @@ export const PageTitles: Record<PagePath, string> = {
   [PagePaths.WEBVIEW]: '原文链接',
   [PagePaths.MESSAGE]: '党员交流',
   [PagePaths.ARCHIVE_DETAIL]: '档案详情',
+  [PagePaths.COLLECTION]: '我的收藏',
 };

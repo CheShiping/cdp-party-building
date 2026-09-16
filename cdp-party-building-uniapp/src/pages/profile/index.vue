@@ -27,8 +27,8 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { key: 'favorite', label: '我的收藏', icon: '/static/icons/star-favorite-red.png', status: 'blocked', tip: '我的收藏即将上线' },
-  { key: 'history', label: '浏览记录', icon: '/static/icons/history-folder-orange.png', status: 'blocked', tip: '浏览记录即将上线' },
+  { key: 'favorite', label: '我的收藏', icon: '/static/icons/star-favorite-red.png', status: 'available', tip: '' },
+  { key: 'history', label: '浏览记录', icon: '/static/icons/history-folder-orange.png', status: 'available', tip: '' },
   { key: 'activity', label: '我的活动', icon: '/static/icons/my-activity-star-purple.png', status: 'blocked', tip: '活动报名签到暂未开放' },
   { key: 'report', label: '思想汇报', icon: '/static/icons/thought-report-red.png', status: 'blocked', tip: '思想汇报暂未开放' },
   { key: 'ledger', label: '学习台账', icon: '/static/icons/study-ledger-purple.png', status: 'blocked', tip: '学习台账暂未开放' },
@@ -37,10 +37,17 @@ const menuItems: MenuItem[] = [
   { key: 'knowledge', label: '应知应会', icon: '/static/icons/knowledge-doc-blue.png', status: 'blocked', tip: '应知应会暂未开放' },
 ];
 
+/** 已解锁菜单 → 路由（未解锁项仅 toast，不假跳转） */
+const MENU_ROUTES: Record<string, string> = {
+  favorite: '/pages/collection/index?type=favorite',
+  history: '/pages/collection/index?type=history',
+  archive: '/pages/archive-detail/index',
+};
+
 function onMenuTap(item: MenuItem) {
-  if (item.status === 'available' && item.key === 'archive') {
-    // 我的档案（feat-012）：档案详情仅本人可见
-    uni.navigateTo({ url: '/pages/archive-detail/index' });
+  const route = item.status === 'available' ? MENU_ROUTES[item.key] : '';
+  if (route) {
+    uni.navigateTo({ url: route });
     return;
   }
   uni.showToast({ title: item.tip, icon: 'none' });
