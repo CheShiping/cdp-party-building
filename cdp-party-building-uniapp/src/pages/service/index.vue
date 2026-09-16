@@ -206,6 +206,7 @@ onShow(() => {
         </AppButton>
       </view>
 
+      <!-- 活动卡（原型样式：封面 + 标签 + 标题 + 摘要 + 日期 + 报名按钮） -->
       <template v-else-if="hasActivities">
         <view
           v-for="item in activities"
@@ -220,18 +221,31 @@ onShow(() => {
             @error="onThumbError(item)"
           />
           <view class="service-page__activity-body">
-            <text class="service-page__activity-title">
-              {{ item.biaoti }}
-            </text>
+            <view class="service-page__activity-head">
+              <text class="service-page__activity-tag">
+                活动
+              </text>
+              <text class="service-page__activity-title">
+                {{ item.biaoti }}
+              </text>
+            </view>
             <text
               v-if="item.zhaiyao"
               class="service-page__activity-summary"
             >
               {{ item.zhaiyao }}
             </text>
-            <text class="service-page__activity-date">
-              {{ formatDate(item.riqi) }}
-            </text>
+            <view class="service-page__activity-foot">
+              <text class="service-page__activity-date">
+                {{ formatDate(item.riqi) }}
+              </text>
+              <view
+                class="service-page__activity-btn"
+                @tap.stop="tipNotOpen"
+              >
+                报名
+              </view>
+            </view>
           </view>
         </view>
       </template>
@@ -332,55 +346,83 @@ onShow(() => {
 }
 
 .service-page__activity {
-  display: flex;
-  padding: $spacing-md 0;
-  border-bottom: $comp-hairline-width solid $color-border-light;
+  margin-bottom: $section-margin;
+  overflow: hidden;
+  background: $color-bg-page;
+  border-radius: $radius-sm;
 
   &:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
   }
 
   &:active {
-    opacity: 0.85;
+    opacity: 0.9;
   }
 }
 
 .service-page__activity-cover {
-  width: 200rpx;
-  height: 140rpx;
-  flex-shrink: 0;
+  display: block;
+  width: 100%;
+  height: 240rpx;
   background: $color-bg-tertiary;
-  border-radius: $radius-sm;
 }
 
 .service-page__activity-body {
+  padding: $spacing-md;
+}
+
+.service-page__activity-head {
   display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-left: $spacing-md;
-  min-width: 0;
+  align-items: center;
+}
+
+.service-page__activity-tag {
+  flex-shrink: 0;
+  padding: 2rpx $spacing-sm;
+  font-size: $font-xs;
+  color: $color-primary;
+  background: $color-primary-soft;
+  border-radius: $radius-xs;
 }
 
 .service-page__activity-title {
+  flex: 1;
+  margin-left: $spacing-sm;
   font-size: $font-md;
-  font-weight: $font-weight-medium;
-  line-height: $line-height-tight;
+  font-weight: $font-weight-semibold;
   color: $color-text-primary;
-  @include multi-ellipsis(2);
-}
-
-.service-page__activity-summary {
-  margin-top: $spacing-xs;
-  font-size: $font-sm;
-  color: $color-text-secondary;
   @include text-ellipsis;
 }
 
-.service-page__activity-date {
+.service-page__activity-summary {
+  display: block;
   margin-top: $spacing-xs;
-  font-size: $font-xs;
-  color: $color-text-tertiary;
+  font-size: $font-sm;
+  line-height: $line-height-normal;
+  color: $color-text-secondary;
+  @include multi-ellipsis(2);
+}
+
+.service-page__activity-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: $spacing-md;
+}
+
+.service-page__activity-date {
+  font-size: $font-sm;
+  color: $color-text-secondary;
+}
+
+.service-page__activity-btn {
+  @include flex-center;
+  height: 56rpx;
+  padding: 0 $spacing-lg;
+  font-size: $font-sm;
+  color: $color-text-inverse;
+  background: $color-primary;
+  border-radius: $radius-full;
 }
 
 .service-page__skeleton {

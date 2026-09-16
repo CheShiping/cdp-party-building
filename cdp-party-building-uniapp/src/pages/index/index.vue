@@ -122,6 +122,11 @@ function tip(title: string) {
   uni.showToast({ title, icon: 'none' });
 }
 
+/** 搜索：跳 AI 学习页（其搜索框走 apituwen biaoti 模糊搜索，真实可用） */
+function goSearch() {
+  uni.switchTab({ url: '/pages/ai/index' });
+}
+
 function openTopic(cat: TuwenCategory) {
   uni.navigateTo({
     url: `/pages/topic/index?categoryId=${cat.settuwenleibieid}&title=${encodeURIComponent(cat.mingcheng)}`,
@@ -180,7 +185,7 @@ const hasContent = computed(
         <view class="home-page__search-row">
           <view
             class="home-page__search"
-            @tap="tip('搜索功能即将上线')"
+            @tap="goSearch"
           >
             <image
               class="home-page__search-icon"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
+import { onLaunch } from '@dcloudio/uni-app';
 import { bootstrap } from '@/services/auth.service';
 
 onLaunch(() => {
@@ -30,13 +30,7 @@ onLaunch(() => {
   // #endif
 });
 
-onShow(() => {
-  console.log('App Show');
-});
-
-onHide(() => {
-  console.log('App Hide');
-});
+// 说明：onShow/onHide 的调试日志已移除（feat-017 审计：生产环境不输出无意义日志）
 </script>
 
 <style lang="scss">

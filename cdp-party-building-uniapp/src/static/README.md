@@ -101,3 +101,4 @@
 5. 新增资源必须先在本表登记，再在页面引用；禁止直接丢 png 到目录里不登记。
 6. 暂不实现功能对应的资源**只登记不引用**，避免"假数据占位"被误判为已实现。
 7. 若后续接口新增图片字段，对应静态资源必须在对照表中标注为「仅兜底」，并按不变式 9 更新 AGENTS.md 的字段清单。
+8. **预留资源不进产物（2026-09-16，feat-017 审计）**：下表中标「暂不实现/预留」且**当前无代码引用**的资源（`banner-20th-congress.png` / `banner-fourth-plenum.png` / `banner-ai-tech.png` / `card-idea-quill.png` / `card-report-doc.png` / `card-notice-bell.png` / `card-study-edit.png`）已从工程内**移出**：静态目录下所有文件都会被打入小程序主包（主包上限 2MB），未引用资源会直接放大包体。解锁对应 feat 时再迁入并在本表恢复登记。
