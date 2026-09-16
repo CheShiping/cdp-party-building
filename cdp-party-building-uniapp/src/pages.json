@@ -65,6 +65,13 @@
         "navigationBarTitleText": "党员交流",
         "enablePullDownRefresh": true
       }
+    },
+    {
+      "path": "pages/archive-detail/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "档案详情"
+      }
     }
   ],
   "globalStyle": {

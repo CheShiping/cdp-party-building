@@ -32,12 +32,17 @@ const menuItems: MenuItem[] = [
   { key: 'activity', label: '我的活动', icon: '/static/icons/my-activity-star-purple.png', status: 'blocked', tip: '活动报名签到暂未开放' },
   { key: 'report', label: '思想汇报', icon: '/static/icons/thought-report-red.png', status: 'blocked', tip: '思想汇报暂未开放' },
   { key: 'ledger', label: '学习台账', icon: '/static/icons/study-ledger-purple.png', status: 'blocked', tip: '学习台账暂未开放' },
-  { key: 'archive', label: '我的档案', icon: '/static/icons/my-archive-orange.png', status: 'blocked', tip: '电子档案即将上线，仅本人可见' },
+  { key: 'archive', label: '我的档案', icon: '/static/icons/my-archive-orange.png', status: 'available', tip: '' },
   { key: 'manual', label: '数智党建手册', icon: '/static/icons/manual-book-green.png', status: 'blocked', tip: '数智党建手册暂未开放' },
   { key: 'knowledge', label: '应知应会', icon: '/static/icons/knowledge-doc-blue.png', status: 'blocked', tip: '应知应会暂未开放' },
 ];
 
 function onMenuTap(item: MenuItem) {
+  if (item.status === 'available' && item.key === 'archive') {
+    // 我的档案（feat-012）：档案详情仅本人可见
+    uni.navigateTo({ url: '/pages/archive-detail/index' });
+    return;
+  }
   uni.showToast({ title: item.tip, icon: 'none' });
 }
 
