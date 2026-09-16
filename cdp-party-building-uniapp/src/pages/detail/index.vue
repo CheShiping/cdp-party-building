@@ -13,6 +13,7 @@ import {
   type TuwenDetail,
 } from '@/api/modules/tuwen';
 import { normalizeRichText } from '@/utils/richtext';
+import { LIUYAN_LEIXING } from '@/api/modules/liuyan';
 import { requireLogin } from '@/services/auth.service';
 
 /**
@@ -205,6 +206,13 @@ function openSource() {
   // #endif
 }
 
+/** 图文留言（feat-010）：leixing=4 + tuwenid 必传 */
+function openMessage() {
+  uni.navigateTo({
+    url: `/pages/message/index?leixing=${LIUYAN_LEIXING.MESSAGE}&tuwenid=${tuwenid.value}&title=${encodeURIComponent('留言交流')}`,
+  });
+}
+
 function goBack() {
   const pages = getCurrentPages();
   if (pages.length > 1) {
@@ -355,6 +363,20 @@ onLoad((options) => {
           title="暂无正文"
           description="该图文暂无正文内容，可查看原文链接"
         />
+
+        <!-- 外链原文（小程序 web-view 受业务域名白名单限制，提供复制链接通道） -->
+        <view
+          v-if="externalUrl"
+          class="detail-page__source"
+          @tap="openSource"
+        >
+          <text class="detail-page__source-text">
+            查看原文
+          </text>
+          <text class="detail-page__source-arrow">
+            ›
+          </text>
+        </view>
       </view>
     </template>
 
@@ -408,15 +430,20 @@ onLoad((options) => {
       </view>
       <!-- #endif -->
 
-      <AppButton
-        v-if="externalUrl"
-        class="detail-page__bar-source"
-        type="ghost"
-        size="small"
-        @click="openSource"
+      <!-- 留言（apiliuyan：leixing=4 图文留言，tuwenid 必传） -->
+      <view
+        class="detail-page__bar-item"
+        @tap="openMessage"
       >
-        查看原文
-      </AppButton>
+        <image
+          class="detail-page__bar-icon"
+          src="/static/icons/member-chat-purple.png"
+          mode="aspectFit"
+        />
+        <text class="detail-page__bar-label">
+          留言
+        </text>
+      </view>
     </view>
 
     <view
@@ -616,8 +643,29 @@ onLoad((options) => {
   }
 }
 
-.detail-page__bar-source {
-  margin-left: auto;
+.detail-page__source {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md;
+  margin-top: $spacing-xl;
+  background: $color-bg-page;
+  border-radius: $radius-sm;
+
+  &:active {
+    opacity: 0.85;
+  }
+}
+
+.detail-page__source-text {
+  font-size: $font-md;
+  color: $color-primary;
+}
+
+.detail-page__source-arrow {
+  margin-left: $spacing-xs;
+  font-size: $font-md;
+  color: $color-primary;
 }
 
 // ---------------------------------------------------------------------------

@@ -58,6 +58,13 @@
       "style": {
         "navigationBarTitleText": "原文链接"
       }
+    },
+    {
+      "path": "pages/message/index",
+      "style": {
+        "navigationBarTitleText": "党员交流",
+        "enablePullDownRefresh": true
+      }
     }
   ],
   "globalStyle": {

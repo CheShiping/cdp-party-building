@@ -4,11 +4,13 @@ import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import AppEmpty from '@/components/AppEmpty/AppEmpty.vue';
 import AppButton from '@/components/AppButton/AppButton.vue';
 import {
+  apiTuwenFuliebiao,
   apiTuwenLiebiao,
   envelopeOssdir,
   resolveFileUrl,
   type TuwenItem,
 } from '@/api/modules/tuwen';
+import { TUWEN_PARENT_CATEGORY } from '@/constants/api';
 import { requireLogin } from '@/services/auth.service';
 
 const categoryId = ref(0);
@@ -45,7 +47,12 @@ async function loadPage(targetPage: number) {
   loading.value = true;
   loadError.value = '';
   try {
-    const res = await apiTuwenLiebiao(categoryId.value, targetPage, pageSize);
+    // 父类别（如 3 专题学习 / 11 通知公告）用 tuwenfuliebiao 取子类全部图文；
+    // 子类别用 tuwenliebiao（实测 fuliebiao 对子类别返回 0 条，2026-09-16）
+    const isParent = (TUWEN_PARENT_CATEGORY as readonly number[]).includes(categoryId.value);
+    const res = isParent
+      ? await apiTuwenFuliebiao(categoryId.value, targetPage, pageSize)
+      : await apiTuwenLiebiao(categoryId.value, targetPage, pageSize);
     ossdir.value = envelopeOssdir(res) || ossdir.value;
     const items = res.list || [];
     if (targetPage === 1) {

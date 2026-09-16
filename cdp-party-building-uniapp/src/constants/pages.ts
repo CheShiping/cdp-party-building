@@ -8,6 +8,7 @@ export const PagePaths = {
   TOPIC: 'pages/topic/index',
   DETAIL: 'pages/detail/index',
   WEBVIEW: 'pages/webview/index',
+  MESSAGE: 'pages/message/index',
 } as const;
 
 export type PagePath = typeof PagePaths[keyof typeof PagePaths];
@@ -22,4 +23,5 @@ export const PageTitles: Record<PagePath, string> = {
   [PagePaths.TOPIC]: '专题专栏',
   [PagePaths.DETAIL]: '内容详情',
   [PagePaths.WEBVIEW]: '原文链接',
+  [PagePaths.MESSAGE]: '党员交流',
 };

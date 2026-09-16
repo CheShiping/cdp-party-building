@@ -35,6 +35,13 @@ export const TUWEN_CATEGORY = {
   BANNER: 1,
   /** AI 智能推送 */
   AI_PUSH: 2,
-  /** 党建专题专栏 */
+  /** 党建专题专栏（父类别，子类 4~9） */
   TOPIC: 3,
+  /** 最新活动（党员服务「近期活动」，2026-09-16 实测类别） */
+  ACTIVITY: 10,
+  /** 通知公告（党务公告，父类别，子类 12 支部公告 / 13 评优评先 / 14 组织关系） */
+  NOTICE: 11,
 } as const;
+
+/** 图文类别层级说明（tuwenleibie 实测） */
+export const TUWEN_PARENT_CATEGORY = [3, 10, 11] as const;
