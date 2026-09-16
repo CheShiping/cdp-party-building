@@ -152,10 +152,62 @@ async function request<T>(options: RequestOptions): Promise<Envelope<T>> {
   });
 }
 
+/**
+ * 裸文本请求：`apituwen/tuwenneirong` 直接返回 HTML（Content-Type: text/html，非 JSON 信封，2026-09-16 实测），
+ * 因此不能走信封解析。dataType: 'text' 避免小程序端自动 JSON.parse 导致内容丢失。
+ */
+async function requestText(url: string, options: Partial<RequestOptions> = {}): Promise<string> {
+  const { withAuth = true, showError = true } = options;
+
+  const headers: Record<string, string> = { ...options.headers };
+
+  if (withAuth) {
+    const ok = await ensureFreshToken();
+    if (!ok) {
+      return Promise.reject(new Error('未登录或登录已过期'));
+    }
+    headers[TOKEN_HEADER] = getToken();
+  }
+
+  return new Promise<string>((resolve, reject) => {
+    uni.request({
+      url: `${API_BASE_URL}${url}`,
+      method: 'GET',
+      header: headers,
+      dataType: 'text',
+      timeout: options.timeout || 15000,
+      success: (res) => {
+        if (res.statusCode === 401 || res.statusCode === 403) {
+          handleUnauthorized();
+          reject(new Error('未登录或登录已过期'));
+          return;
+        }
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+          const message = `请求失败: ${res.statusCode}`;
+          if (showError) uni.showToast({ title: message, icon: 'none' });
+          reject(new Error(message));
+          return;
+        }
+        const body = res.data;
+        resolve(typeof body === 'string' ? body : body ? JSON.stringify(body) : '');
+      },
+      fail: (err) => {
+        const message = isH5()
+          ? '网络异常，请检查跨域或代理配置'
+          : '网络异常，请稍后重试';
+        if (showError) uni.showToast({ title: message, icon: 'none' });
+        reject(new Error(`${message}(${err.errMsg || ''})`));
+      },
+    });
+  });
+}
+
 export const requestClient = {
   /** GET：data 作为 query 参数 */
   get: <T = unknown>(url: string, data?: RequestData, options?: Partial<RequestOptions>) =>
     request<T>({ url, method: 'GET', data, ...options }),
+  /** GET 裸文本（HTML 等非信封响应） */
+  text: (url: string, options?: Partial<RequestOptions>) => requestText(url, options),
   post: <T = unknown>(url: string, data?: RequestData, options?: Partial<RequestOptions>) =>
     request<T>({ url, method: 'POST', data, ...options }),
   put: <T = unknown>(url: string, data?: RequestData, options?: Partial<RequestOptions>) =>

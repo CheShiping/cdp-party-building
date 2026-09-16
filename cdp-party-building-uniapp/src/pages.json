@@ -45,6 +45,19 @@
         "navigationBarTitleText": "专题专栏",
         "enablePullDownRefresh": true
       }
+    },
+    {
+      "path": "pages/detail/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "内容详情"
+      }
+    },
+    {
+      "path": "pages/webview/index",
+      "style": {
+        "navigationBarTitleText": "原文链接"
+      }
     }
   ],
   "globalStyle": {

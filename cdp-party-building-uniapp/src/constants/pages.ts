@@ -6,6 +6,8 @@ export const PagePaths = {
   PROFILE: 'pages/profile/index',
   LOGIN: 'pages/login/index',
   TOPIC: 'pages/topic/index',
+  DETAIL: 'pages/detail/index',
+  WEBVIEW: 'pages/webview/index',
 } as const;
 
 export type PagePath = typeof PagePaths[keyof typeof PagePaths];
@@ -18,4 +20,6 @@ export const PageTitles: Record<PagePath, string> = {
   [PagePaths.PROFILE]: '个人中心',
   [PagePaths.LOGIN]: '登录',
   [PagePaths.TOPIC]: '专题专栏',
+  [PagePaths.DETAIL]: '内容详情',
+  [PagePaths.WEBVIEW]: '原文链接',
 };

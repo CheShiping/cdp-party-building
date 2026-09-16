@@ -3,7 +3,12 @@ import { reactive, ref } from 'vue';
 import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import AppEmpty from '@/components/AppEmpty/AppEmpty.vue';
 import AppButton from '@/components/AppButton/AppButton.vue';
-import { apiTuwenLiebiao, resolveFileUrl, type TuwenItem } from '@/api/modules/tuwen';
+import {
+  apiTuwenLiebiao,
+  envelopeOssdir,
+  resolveFileUrl,
+  type TuwenItem,
+} from '@/api/modules/tuwen';
 import { requireLogin } from '@/services/auth.service';
 
 const categoryId = ref(0);
@@ -15,6 +20,8 @@ const pageSize = 10;
 const finished = ref(false);
 const loading = ref(false);
 const loadError = ref('');
+/** 文件前缀：只在响应 obj.ossdir 里（不变式 4，2026-09-16 实测） */
+const ossdir = ref('');
 
 const thumbError = reactive<Record<number, boolean>>({});
 
@@ -22,7 +29,7 @@ function thumbSrc(item: TuwenItem): string {
   if (thumbError[item.settuwenid]) {
     return '/static/images/cover-greatwall.png';
   }
-  return resolveFileUrl(item.ossdir, item.wenjianurl) || '/static/images/cover-greatwall.png';
+  return resolveFileUrl(ossdir.value, item.wenjianurl) || '/static/images/cover-greatwall.png';
 }
 
 function onThumbError(item: TuwenItem) {
@@ -39,6 +46,7 @@ async function loadPage(targetPage: number) {
   loadError.value = '';
   try {
     const res = await apiTuwenLiebiao(categoryId.value, targetPage, pageSize);
+    ossdir.value = envelopeOssdir(res) || ossdir.value;
     const items = res.list || [];
     if (targetPage === 1) {
       list.value = items;
@@ -61,8 +69,17 @@ function retry() {
   loadPage(1);
 }
 
-function openDetail() {
-  uni.showToast({ title: '内容详情即将上线', icon: 'none' });
+/** 内容详情（feat-008）：带上真实类别 id 与 ossdir，详情接口才返回完整数据 */
+function openDetail(item: TuwenItem) {
+  const leibieid = item.settuwenleibieid || categoryId.value;
+  const query = [
+    `tuwenid=${item.settuwenid}`,
+    `tuwenleibieid=${leibieid}`,
+    `biaoti=${encodeURIComponent(item.biaoti || '')}`,
+    `ossdir=${encodeURIComponent(ossdir.value)}`,
+    `riqi=${encodeURIComponent(item.riqi || '')}`,
+  ].join('&');
+  uni.navigateTo({ url: `/pages/detail/index?${query}` });
 }
 
 onLoad((options) => {
@@ -116,7 +133,7 @@ onReachBottom(() => {
         v-for="item in list"
         :key="item.settuwenid"
         class="topic-page__item"
-        @tap="openDetail"
+        @tap="openDetail(item)"
       >
         <image
           class="topic-page__thumb"
